@@ -21,7 +21,7 @@ Designed for engineers, researchers, and technical professionals who need strict
 - **Dynamic Density Scaling (`density`):** Adjust a single factor (`0.7` – `1.3`) to scale macro breathing room while keeping line heights and micro-spacing readability-locked.
 - **Dual-Level Structured Lists:** Dedicated function support for parent achievements and indented sub-item checklists (`cv_entry`).
 - **ATS-Optimized Parsing:** Single-column layout with standard text layers, clean text headings, and zero fragile floating frames.
-- **Custom Visual Branding:** Fully centralized color definitions (`accentcolor`, `accentcolordark`, `darkgraytext`).
+- **Custom Visual Branding:** Dynamic theme palette injection (`accent-color`, `text-color`, `muted-color`) via template parameters.
 - **Zero Heavy Dependencies:** Compiles natively via standard Typst CLI in milliseconds.
 
 ---
@@ -63,6 +63,7 @@ All layout parameters are strictly optional and merge on top of the built-in def
   paper: "a4",         // "a4" | "us-letter"
   font-size: 9.5pt,    // Global typographic base size
   line-leading: 0.35em,// Global paragraph leading
+  accent-color: rgb(24, 76, 120), // Primary theme accent color
   layout: (
     density: 1.0,      // Master vertical compression factor (0.7 to 1.3)
     // Optional fine-grained overrides:
@@ -95,14 +96,18 @@ All layout parameters are strictly optional and merge on top of the built-in def
 | `root-list-marker-size`       | `0.75em`                                   | Root Lists  | Visual scale of the root list marker symbol.                                    |
 | `root-list-body-indent`       | `0.5em`                                    | Root Lists  | Indentation for root list body blocks.                                          |
 
-### Changing Accent Color
+### Customizing Colors
 
-To switch to your own personal brand color, update the primary definition in `template.typ`:
+Override theme colors directly via `cv.with` parameters without modifying the core template:
 
 ```typst
-// template.typ
-#let accentcolor = rgb(24, 76, 120)     // Replace with your preferred color
-#let accentcolordark = rgb(16, 50, 80)
+#show: cv.with(
+  name: "Your Name",
+  accent-color: rgb("#1a5276"), // Primary accent (headings, rules, bullets)
+  text-color: rgb(64, 64, 64),   // Main body text color
+  muted-color: rgb(115, 115, 115), // Subtitles and auxiliary details
+  // ...
+)
 
 ```
 
