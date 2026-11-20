@@ -146,7 +146,7 @@
               link(l)[#l]
             }
           }).join(", ")
-          contact-rows.push([#text(fill: active-layout.accent-color)[\u{1F517}] *LinkedIn:* #rendered_links])
+          contact-rows.push([#text(fill: active-layout.accent-color)[\u{1F517}] *Links:* #rendered_links])
         }
 
         if contact-rows.len() > 0 {
@@ -200,8 +200,7 @@
   let cfg = cv-layout-state.get()
   let d = cfg.density
   let raw-body = if body-sink.pos().len() > 0 { body-sink.pos().first() } else { none }
-  
-  let has-body = raw-body != none and repr(raw-body) != "[]" and repr(raw-body) != "[ ]"
+  let has-body = raw-body != none and raw-body != [] and raw-body != [ ]
   let has-second-row = subtitle != "" or location != ""
 
   block(
@@ -215,23 +214,11 @@
       above: 0pt,
       below: if has-body { cfg.entry-header-to-body-gap } else { 0pt },
     )[
-      #grid(
-        columns: (1fr, auto),
-        align: (left, right),
-        row-gutter: cfg.entry-title-to-subtitle-gap,
-        text(weight: "bold", size: 1.01em, fill: black)[#title],
-        text(weight: "bold", fill: cfg.text-color, size: 0.95em)[#date],
-        ..(
-          if has-second-row {
-            (
-              text(style: "italic", fill: cfg.text-color, size: 0.95em)[#subtitle],
-              text(style: "italic", fill: cfg.muted-color, size: 0.92em)[#location],
-            )
-          } else {
-            ()
-          }
-        ),
-      )
+      #text(weight: "bold", size: 1.01em, fill: black)[#title]#h(1fr)#text(weight: "bold", fill: cfg.text-color, size: 0.95em)[#date]
+      #if has-second-row [
+        #v(cfg.entry-title-to-subtitle-gap, weak: true)
+        #text(style: "italic", fill: cfg.text-color, size: 0.95em)[#subtitle]#if location != "" [#h(1fr)#text(style: "italic", fill: cfg.muted-color, size: 0.92em)[#location]]
+      ]
     ]
     #if has-body [
       #block(width: 100%, above: 0pt, below: 0pt, breakable: breakable)[
