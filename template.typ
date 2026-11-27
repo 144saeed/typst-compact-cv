@@ -6,10 +6,8 @@
 
 // Primary Color Palette
 #let accentcolor = rgb(24, 76, 120)       // Deep Professional Navy
-#let accentcolordark = rgb(16, 50, 80)     // Darkened Shade for High Contrast
 #let darkgraytext = rgb(64, 64, 64)       // Primary Body Text
 #let mutedgray = rgb(115, 115, 115)       // Secondary / Location Text
-#let lightgray = rgb(230, 230, 230)       // Subtle Dividers
 
 // Default Layout & Typographic Configuration
 #let default-layout = (
@@ -27,11 +25,14 @@
   root-list-body-indent: 0.5em,
   root-list-item-gap: 0.95em,
   root-list-line-leading: 0.45em,
-  entry-title-to-subtitle-gap: 0.3em,
-  entry-header-to-body-gap: 0.55em,
+  entry-title-to-subtitle-gap: 0.35em,
+  entry-subtitle-to-note-gap: 0.3em,
+  entry-note-line-leading: 0.3em,
+  entry-header-to-body-gap: 0.65em,
   entry-between-entries-gap: 0.95em,
   entry-list-spacing: 0.48em,
   entry-list-body-indent: 0.4em,
+  entry-sublist-spacing: 0.35em,
   entry-sublist-gap-above: 0.25em,
   entry-sublist-gap-below: 0.35em,
 )
@@ -175,16 +176,16 @@
     stroke: (bottom: 0.8pt + cfg.accent-color),
     inset: (bottom: 0.25em),
     above: cfg.section-title-above * d,
-    below: cfg.section-title-below,
+    below: cfg.section-title-below * d,
   )[
     #text(size: 1.15em, weight: "bold", fill: cfg.accent-color)[#upper(title)]
   ]
 }
 
 // Summary Block
-#let cv_summary(content) = context {
+#let cv_summary(title: "Professional Summary", content) = context {
   let cfg = cv-layout-state.get()
-  cv_section("Professional Summary")
+  cv_section(title)
   text(fill: cfg.text-color)[#content]
 }
 
@@ -194,6 +195,7 @@
   subtitle: "",
   date: "",
   location: "",
+  note: "",
   breakable: false,
   ..body-sink,
 ) = context {
@@ -202,6 +204,7 @@
   let raw-body = if body-sink.pos().len() > 0 { body-sink.pos().first() } else { none }
   let has-body = raw-body != none and raw-body != [] and raw-body != [ ]
   let has-second-row = subtitle != "" or location != ""
+  let has-third-row = note != ""
 
   block(
     width: 100%,
@@ -219,6 +222,13 @@
         #v(cfg.entry-title-to-subtitle-gap, weak: true)
         #text(style: "italic", fill: cfg.text-color, size: 0.95em)[#subtitle]#if location != "" [#h(1fr)#text(style: "italic", fill: cfg.muted-color, size: 0.92em)[#location]]
       ]
+      #if has-third-row [
+        #v(if has-second-row { cfg.entry-subtitle-to-note-gap } else { cfg.entry-title-to-subtitle-gap }, weak: true)
+        #align(left)[
+          #set par(leading: cfg.entry-note-line-leading)
+          #text(style: "normal", fill: cfg.muted-color, size: 0.89em)[#note]
+        ]
+      ]
     ]
     #if has-body [
       #block(width: 100%, above: 0pt, below: 0pt, breakable: breakable)[
@@ -229,6 +239,7 @@
             above: cfg.entry-sublist-gap-above,
             below: cfg.entry-sublist-gap-below,
           )
+          show list: set list(spacing: cfg.entry-sublist-spacing)
           it
         }
         #set list(

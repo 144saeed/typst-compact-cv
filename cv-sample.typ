@@ -3,7 +3,7 @@
 // Compiled with Typst (typst compile cv-sample.typ)
 // =============================================================================
 
-#import "template.typ": cv, cv_section, cv_summary, cv_entry, mute, accent, accentcolor, darkgraytext
+#import "template.typ": cv, cv_section, cv_summary, cv_entry, mute, accent
 
 #show: cv.with(
   name: "Jordan Lee",
@@ -22,9 +22,13 @@
     section-title-above: 1.4em,
     section-title-below: 0.6em,
     entry-between-entries-gap: 1.0em,
-    entry-header-to-body-gap: 0.55em,
+    entry-title-to-subtitle-gap: 0.35em,
+    entry-subtitle-to-note-gap: 0.3em,
+    entry-note-line-leading: 0.3em,
+    entry-header-to-body-gap: 0.65em,
     entry-list-spacing: 0.48em,
     entry-list-body-indent: 0.4em,
+    entry-sublist-spacing: 0.35em,
     entry-sublist-gap-above: 0.25em,
     entry-sublist-gap-below: 0.35em,
   ),
@@ -44,10 +48,13 @@
 
 #cv_section("Professional Experience")
 
+// Case 8: subtitle + location + note
 #cv_entry(
   title: "Principal Infrastructure Architect",
-  subtitle: "Apex Cloud Innovations, Seattle, WA",
+  subtitle: "Apex Cloud Innovations",
+  location: "Seattle, WA",
   date: "Jan 2024 – Present",
+  note: "Enterprise multi-cloud infrastructure provider serving high-volume SaaS workloads across North America and Europe.",
 )[
   - *Initiative:* Core re-architecture of the enterprise container runtime serving over 150 million daily active requests across hybrid cloud environments.
   - Implemented automated autoscaling policies based on real-time request volume metrics, decreasing compute overhead by 28%.
@@ -55,9 +62,11 @@
   - Spearheaded weekly architectural alignment sessions with technical leads, establishing unified engineering quality gates.
 ]
 
+// Case 4: subtitle + location (no note)
 #cv_entry(
   title: "Staff Software Engineer - Core Platform",
-  subtitle: "Cascade Data Networks, San Francisco, CA",
+  subtitle: "Cascade Data Networks",
+  location: "San Francisco, CA",
   date: "2019 – 2024",
   breakable: true,
 )[
@@ -71,16 +80,19 @@
   - *Team Mentorship & Culture:* Coordinated onboarding programs and mentored 9 junior and mid-level engineers in distributed system patterns and test-driven methodologies.
 ]
 
+// Case 6: subtitle + note (no location)
 #cv_entry(
   title: "Senior Backend Engineer",
   subtitle: "FinScale Technologies, New York, NY",
   date: "March 2023 – Jan 2024",
+  note: "Regulated real-time payment clearing platform processing high-frequency interbank settlements.",
 )[
   - Developed critical transaction ledger services handling financial transfers with strict idempotency and consistency guarantees.
   - Authored custom static analysis linters in Go to enforce uniform concurrency practices and eradicate thread-safety regressions.
   - Participated in weekly on-call operational rotations, successfully maintaining 99.99% core platform availability.
 ]
 
+// Case 2: subtitle only (no location, no note)
 #cv_entry(
   title: "DevOps & Release Engineer",
   subtitle: "Beacon Media Systems, Austin, TX",
@@ -91,44 +103,51 @@
   - Conducted cross-team training on security scanning tooling and container image vulnerability mitigation.
 ]
 
+// Case 7: location + note (no subtitle)
 #cv_entry(
-  title: "Full-Stack Software Consultant (Contract)",
-  subtitle: "Nexus Solutions Group, Remote",
+  title: "Full-Stack Software Consultant (Independent)",
+  location: "Remote",
   date: "July 2021 – Dec 2021",
+  note: "Advisory engagement delivering identity management and customer portals for mid-market SaaS clients.",
 )[
   - Designed and delivered responsive customer administrative portals using React and Node.js microservices.
   - Configured role-based access control (RBAC) and Single Sign-On (SSO) integrations supporting SAML and OIDC.
 ]
 
+// Case 3: location only (no subtitle, no note)
 #cv_entry(
-  title: "Site Reliability Engineer",
-  subtitle: "AeroPulse Digital, Denver, CO",
+  title: "Site Reliability Engineer (Contract)",
+  location: "Denver, CO",
   date: "Oct 2020 – June 2021",
 )[
   - Built real-time monitoring dashboards and automated alerting rules in Grafana, catching latency degradation prior to customer impact.
 ]
 
+// Case 5: note only (no subtitle, no location)
 #cv_entry(
-  title: "Teaching Assistant (Operating Systems & Networks)",
-  subtitle: "University of Washington, Seattle, WA",
+  title: "Open-Source Maintainer (Distributed Tracing Tooling)",
   date: "2018 – 2020",
+  note: "Community-driven telemetry collectors and instrumentation libraries with 4.2k+ GitHub stars.",
 )[
-  - Led weekly lab discussions on memory virtualization, thread synchronization, and network socket programming.
+  - Led weekly triage sessions and maintained core adapters for memory profiling, thread synchronization, and network socket tracing.
 ]
 
 #cv_section("Education")
 
+// Case 8 (Academic variant): subtitle + location + note
 #cv_entry(
   title: "M.S. in Computer Science (Distributed Systems)",
-  subtitle: "University of Washington, Seattle, WA",
+  subtitle: "University of Washington",
+  location: "Seattle, WA",
   date: "2020",
+  note: "GPA: 3.92/4.00 • Graduate Research Assistantship in Systems & Networking Lab",
 )[
   - _Thesis: "Consensus Optimization and Partition Resilience in Edge-Deployed Data Stores"._
 ]
 
+// Case 1: title + date only (no subtitle, no location, no note, no body)
 #cv_entry(
-  title: "B.S. in Computer Engineering (Magna Cum Laude)",
-  subtitle: "Purdue University, West Lafayette, IN",
+  title: "B.S. in Computer Engineering — Purdue University (Magna Cum Laude)",
   date: "2018",
 )
 
