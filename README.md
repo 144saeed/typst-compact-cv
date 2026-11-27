@@ -85,12 +85,12 @@ All layout parameters are strictly optional and merge on top of the built-in def
 | `contact-rows-gap`            | `0.35em`                                   | Header      | Vertical separation between stacked contact lines.                              |
 | `section-title-above`         | `1.4em`                                    | Sections    | Margin before section titles (scales with density).                             |
 | `section-title-below`         | `0.6em`                                    | Sections    | Padding directly beneath section divider line (scales with density).            |
-| `entry-between-entries-gap`   | `0.95em`                                   | Entries     | Vertical gap separating individual CV entries (scales with density).            |
-| `entry-header-to-body-gap`    | `0.65em`                                   | Entries     | Space between entry header rows and the bullet body.                            |
+| `entry-between-entries-gap`   | `1.0em`                                    | Entries     | Vertical gap separating individual CV entries (scales with density).            |
+| `entry-header-to-body-gap`    | `0.85em`                                   | Entries     | Space between entry header rows and the bullet body.                            |
 | `entry-title-to-subtitle-gap` | `0.35em`                                   | Entries     | Row gutter between entry title and organization/role subtitle (or note).        |
 | `entry-subtitle-to-note-gap`  | `0.3em`                                    | Entries     | Row gutter between entry subtitle/location and optional third-row note.         |
 | `entry-note-line-leading`     | `0.3em`                                    | Entries     | Line leading inside multi-line third-row explanatory notes.                     |
-| `entry-list-spacing`          | `0.48em`                                   | Lists       | Spacing between top-level bullet achievements.                                  |
+| `entry-list-spacing`          | `0.7em`                                    | Lists       | Spacing between top-level bullet achievements.                                  |
 | `entry-list-body-indent`      | `0.4em`                                    | Lists       | Indentation for bullet body text.                                               |
 | `entry-sublist-spacing`       | `0.35em`                                   | Sub-lists   | Vertical spacing between nested checklist sub-bullets.                          |
 | `entry-sublist-gap-above`     | `0.25em`                                   | Sub-lists   | Clearance space above nested checklist sub-bullets.                             |
