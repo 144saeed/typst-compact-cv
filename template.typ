@@ -43,6 +43,15 @@
 #let mute(it) = context text(fill: cv-layout-state.get().at("muted-color", default: mutedgray))[#it]
 #let accent(it) = context text(fill: cv-layout-state.get().at("accent-color", default: accentcolor))[#it]
 
+#let cv_link(url, display: none) = {
+  let label = if display != none and display != "" { display } else { url }
+  link(url)[#label]
+}
+
+#let cv_email(address) = link("mailto:" + address.trim())[#address]
+
+#let cv_phone(number) = link("tel:" + number.replace(" ", ""))[#number]
+
 // Root Document Function
 #let cv(
   name: "",
@@ -127,7 +136,7 @@
           r1.push([#text(fill: active-layout.accent-color)[\u{1F4CD}] *Address:* #address])
         }
         if phones.len() > 0 {
-          let phone_links = phones.map(p => link("tel:" + p.replace(" ", ""))[#p]).join(", ")
+          let phone_links = phones.map(p => cv_phone(p)).join(", ")
           r1.push([#text(fill: active-layout.accent-color)[\u{1F4DE}] *Phone:* #phone_links])
         }
         if r1.len() > 0 {
@@ -135,16 +144,16 @@
         }
 
         if emails.len() > 0 {
-          let email_links = emails.map(e => link("mailto:" + e)[#e]).join(", ")
+          let email_links = emails.map(e => cv_email(e)).join(", ")
           contact-rows.push([#text(fill: active-layout.accent-color)[\u{2709}] *Email:* #email_links])
         }
 
         if links.len() > 0 {
           let rendered_links = links.map(l => {
             if type(l) == dictionary {
-              link(l.url)[#l.at("display", default: l.url)]
+              cv_link(l.url, display: l.at("display", default: none))
             } else {
-              link(l)[#l]
+              cv_link(l)
             }
           }).join(", ")
           contact-rows.push([#text(fill: active-layout.accent-color)[\u{1F517}] *Links:* #rendered_links])

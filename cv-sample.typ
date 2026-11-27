@@ -3,7 +3,7 @@
 // Compiled with Typst (typst compile cv-sample.typ)
 // =============================================================================
 
-#import "template.typ": cv, cv_section, cv_summary, cv_entry, mute, accent
+#import "template.typ": cv, cv_section, cv_summary, cv_entry, cv_link, cv_email, cv_phone, mute, accent
 
 #show: cv.with(
   name: "Jordan Lee",
@@ -152,5 +152,9 @@
 )
 
 #cv_section("Selected Technical Publications")
-- "Fault-Tolerant State Replication for Edge Microservices," _IEEE Transactions on Cloud Computing_, 2023, DOI: #link("https://doi.org/10.1109/TCC.example")[10.1109/TCC.example].
-- "Evaluating Tail Latency Mitigations in Virtualized Service Meshes," _ACM SIGOPS Operating Systems Review_, 2021, DOI: #link("https://doi.org/10.1145/example")[10.1145/example].
+- "Fault-Tolerant State Replication for Edge Microservices," _IEEE Transactions on Cloud Computing_, 2023, DOI: #cv_link("https://doi.org/10.1109/TCC.example", display: "10.1109/TCC.example").
+- "Evaluating Tail Latency Mitigations in Virtualized Service Meshes," _ACM SIGOPS Operating Systems Review_, 2021, DOI: #cv_link("https://doi.org/10.1145/example", display: "10.1145/example").
+
+#cv_section("References")
+- *Dr. Elena Vance*, VP of Infrastructure Engineering, Apex Cloud Innovations — #cv_email("elena.vance@example.com") | #cv_phone("+1 (206) 555-0142")
+- *Prof. Marcus Sterling*, Department of Computer Science, University of Washington — #cv_email("m.sterling@example.edu") | #cv_link("https://example.edu/faculty/sterling", display: "Faculty Profile")

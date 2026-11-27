@@ -121,7 +121,13 @@ All layout parameters are strictly optional and merge on top of the built-in def
 )[
   - Primary achievement bullet
     - Indented sub-item detail
-]‍‍‍
+]
+
+// Inline semantic link helpers (standardized formatting across header and body)
+#cv_link("https://doi.org/10.1109/example", display: "10.1109/example")
+#cv_link("https://github.com/username")
+#cv_email("contact@example.com")
+#cv_phone("+1 (206) 555-0199")
 ```
 
 ### Customizing Colors
