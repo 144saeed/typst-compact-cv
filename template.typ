@@ -4,17 +4,11 @@
 // Features: Dynamic Density Scaling, Dual-Level Nested Bullets, ATS Optimization
 // =============================================================================
 
-// Primary Color Palette
-#let accentcolor = rgb(24, 76, 120)       // Deep Professional Navy
-#let darkgraytext = rgb(64, 64, 64)       // Primary Body Text
-#let mutedgray = rgb(115, 115, 115)       // Secondary / Location Text
+#import "common.typ": *
 
 // Default Layout & Typographic Configuration
-#let default-layout = (
+#let default-layout = base-theme-colors + (
   density: 1.0,
-  accent-color: accentcolor,
-  text-color: darkgraytext,
-  muted-color: mutedgray,
   page-margin: (x: 0.75in, top: 0.65in, bottom: 0.65in),
   name-to-contacts-gap: 0.8em,
   contact-details-font-scale: 0.9em,
@@ -37,21 +31,6 @@
   entry-sublist-gap-below: 0.35em,
 )
 
-#let cv-layout-state = state("cv-layout", default-layout)
-
-// Inline Utility Functions
-#let mute(it) = context text(fill: cv-layout-state.get().at("muted-color", default: mutedgray))[#it]
-#let accent(it) = context text(fill: cv-layout-state.get().at("accent-color", default: accentcolor))[#it]
-
-#let cv_link(url, display: none) = {
-  let label = if display != none and display != "" { display } else { url }
-  link(url)[#label]
-}
-
-#let cv_email(address) = link("mailto:" + address.trim())[#address]
-
-#let cv_phone(number) = link("tel:" + number.replace(" ", ""))[#number]
-
 // Root Document Function
 #let cv(
   name: "",
@@ -68,12 +47,13 @@
   layout: (:),
   body,
 ) = {
-  let user-colors = (:)
-  if accent-color != none { user-colors.insert("accent-color", accent-color) }
-  if text-color != none { user-colors.insert("text-color", text-color) }
-  if muted-color != none { user-colors.insert("muted-color", muted-color) }
-
-  let active-layout = default-layout + if type(layout) == dictionary { layout } else { (:) } + user-colors
+  let active-layout = resolve-layout(
+    default-layout,
+    layout: layout,
+    accent-color: accent-color,
+    text-color: text-color,
+    muted-color: muted-color,
+  )
   cv-layout-state.update(active-layout)
   let d = active-layout.density
 
@@ -94,23 +74,13 @@
     }
   )
 
-  set text(
-    font: ("Roboto", "Liberation Sans", "DejaVu Sans"),
-    size: font-size,
-    fill: black,
-    lang: "en",
+  show: apply-base-styles.with(
+    active-layout,
+    font-size: font-size,
+    line-leading: line-leading,
   )
 
-  set par(justify: true, leading: line-leading)
-
-  // Hyperlink Formatting
-  show link: it => {
-    set text(fill: active-layout.accent-color)
-    underline(stroke: 0.5pt + active-layout.accent-color, offset: 1.5pt, it)
-  }
-
   // Visual Contrast Rules
-  show strong: it => text(fill: black, weight: "bold", it)
   show list: set text(fill: active-layout.text-color)
 
   // Top-Level Unordered Lists (Skills, Publications)
